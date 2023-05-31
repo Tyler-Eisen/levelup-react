@@ -18,5 +18,41 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: #70044E;
+  color: white; /* This sets all text color to white */
+}
+
+.card {
+  color: inherit; /* This resets the color of the text in the card */
+}
+
+.games {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.events {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.card {
+  color: black;
+  margin: 20px;
+  width: 200px;
+  height: 300px;
+}
+
+
+.register-btn{
+  position: fixed; /* Fix the position of button on the page */
+  bottom: 20px; /* Distance from the bottom */
+  left: 50%; /* Position it at the center */
+  background-color: #FFBB23;
+  z-index: 1000;
+  margin-top: 10px;
 }
