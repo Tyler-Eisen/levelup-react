@@ -7,43 +7,50 @@ const getEvents = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const createEvent = (event) => {
-  return fetch(`${clientCredentials.databaseURL}/events`, {
-    method: 'POST',
+const createEvent = (event) => fetch(`${clientCredentials.databaseURL}/events`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(event),
+})
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error creating event:', error);
+    throw error;
+  });
+
+const getSingleEvent = (id) => fetch(`${clientCredentials.databaseURL}/events/${id}`)
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error fetching event:', error);
+    throw error;
+  });
+
+const updateEvent = (id, currentEvent) => fetch(`${clientCredentials.databaseURL}/events/${id}`, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(currentEvent),
+})
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error updating event:', error);
+    throw error;
+  });
+
+const deleteEvent = (event) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/events/${event}`, {
+    method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application.json',
     },
-    body: JSON.stringify(event),
   })
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error creating event:', error);
-      throw error;
-    });
-};
+    .then((data) => resolve(data))
+    .catch(reject);
+});
 
-const getSingleEvent = (id) => {
-  return fetch(`${clientCredentials.databaseURL}/events/${id}`)
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error fetching event:', error);
-      throw error;
-    });
+export {
+  getEvents, createEvent, getSingleEvent, updateEvent, deleteEvent,
 };
-
-const updateEvent = (id, currentEvent) => {
-  return fetch(`${clientCredentials.databaseURL}/events/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(currentGame),
-  })
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error updating event:', error);
-      throw error;
-    });
-};
-
-export { getEvents, createEvent, getSingleEvent, updateEvent };

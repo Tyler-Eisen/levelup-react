@@ -7,9 +7,11 @@ import { getGames } from '../utils/data/gamedata';
 function Home() {
   const [games, setGames] = useState([]);
   const router = useRouter(); // Access the router object
-
-  useEffect(() => {
+  const showGames = () => {
     getGames().then((data) => setGames(data));
+  };
+  useEffect(() => {
+    showGames();
   }, []);
 
   return (
@@ -33,7 +35,7 @@ function Home() {
               maker={game.maker}
               numberOfPlayers={game.number_of_players}
               skillLevel={game.skill_level}
-
+              onUpdate={showGames}
             />
           </section>
         ))}

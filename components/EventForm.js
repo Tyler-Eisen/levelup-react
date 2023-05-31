@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { createEvent } from '../utils/data/eventdata';
+import { createEvent, updateEvent } from '../utils/data/eventdata';
 import { getGames } from '../utils/data/gamedata';
 
 const initialState = {
-  game_id: '',
+  game: '',
   description: '',
   date: '',
   time: '',
@@ -42,7 +42,15 @@ const EventForm = ({ user }) => {
       organizer: user.uid,
     };
 
-    createEvent(event).then(() => router.push('/event'));
+    if (event.id) {
+      // Update event
+      updateEvent(event.id, event)
+        .then(() => router.push('/event'));
+    } else {
+      // Create event
+      createEvent(event)
+        .then(() => router.push('/event'));
+    }
   };
 
   return (

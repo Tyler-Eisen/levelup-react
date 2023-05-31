@@ -6,8 +6,8 @@ import { useAuth } from '../utils/context/authContext';
 import { createGame, getGameTypes, updateGame } from '../utils/data/gamedata';
 
 const initialState = {
-  skill_level: 1,
-  number_of_players: 0,
+  skillLevel: 1,
+  numberOfPlayers: 0,
   title: '',
   maker: '',
   gameType: 0,
@@ -38,13 +38,22 @@ const GameForm = ({ game }) => {
     e.preventDefault();
 
     if (game && game.id) {
-      updateGame(game.id, currentGame)
+      // console.warn(currentGame);
+      const payload = {
+        title: currentGame.title,
+        maker: currentGame.maker,
+        gameType: currentGame.game_type,
+        numberOfPlayers: currentGame.number_of_players,
+        skillLevel: currentGame.skill_level,
+      };
+      // console.warn(payload);
+      updateGame(game.id, payload)
         .then(() => router.push('/game'));
     } else {
       // Create a new game
-      console.log('User ID:', user.id);
-      const payload = { ...currentGame, gamer: user.id };
-      console.warn(payload, user.id);
+      console.warn('User ID:', user.id);
+      const payload = { ...currentGame, userId: user.id };
+      console.warn(payload);
       createGame(payload)
         .then(() => router.push('/game'));
     }
@@ -90,20 +99,20 @@ const GameForm = ({ game }) => {
         <Form.Group className="mb-3">
           <Form.Label>Skill Level</Form.Label>
           <Form.Control
-            name="skill_level"
+            name="skillLevel"
             placeholder="How hard is it?"
             required
-            value={currentGame.skill_level}
+            value={currentGame.skillLevel}
             onChange={handleChange}
           />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Number of Players</Form.Label>
           <Form.Control
-            name="number_of_players"
+            name="numberOfPlayers"
             placeholder="Enter number of players"
             required
-            value={currentGame.number_of_players}
+            value={currentGame.numberOfPlayers}
             onChange={handleChange}
           />
         </Form.Group>
@@ -118,8 +127,8 @@ const GameForm = ({ game }) => {
 GameForm.propTypes = {
   game: PropTypes.shape({
     id: PropTypes.number,
-    skill_level: PropTypes.number,
-    number_of_players: PropTypes.number,
+    skillLevel: PropTypes.number,
+    numberOfPlayers: PropTypes.number,
     title: PropTypes.string,
     maker: PropTypes.string,
     gameType: PropTypes.number,
@@ -130,8 +139,8 @@ GameForm.propTypes = {
 GameForm.defaultProps = {
   game: {
     id: 0,
-    skill_level: 1,
-    number_of_players: 0,
+    skillLevel: 1,
+    numberOfPlayers: 0,
     title: '',
     maker: '',
     gameType: 0,

@@ -1,37 +1,51 @@
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { deleteEvent } from '../utils/data/eventdata';
 
 const EventCard = ({
+  id,
   description,
   date,
   time,
-  id,
-}) => (
-  <Card className="text-center">
-    <Card.Body>
-      <Card.Text>{description}</Card.Text>
-      <Card.Text>Date: {date}</Card.Text>
-      <Card.Text>Time: {time}</Card.Text>
-    </Card.Body>
-    <Card.Footer className="text-muted">Event Details
-      <>
-        <Link href={`/events/edit/${id}`} passHref>
-          <Button size="sm" className="m-2">
-            EDIT
-          </Button>
-        </Link>
-      </>
-    </Card.Footer>
-  </Card>
-);
+  onUpdate,
+}) => {
+  const deleteThisEvent = () => {
+    if (window.confirm('Delete Event?')) {
+      deleteEvent(id).then(() => onUpdate());
+    }
+  };
+  const router = useRouter();
+  return (
+    <Card className="text-center">
+      <Card.Header>EVENT</Card.Header>
+      <Card.Body>
+        <Card.Text>{description}</Card.Text>
+        <Card.Text>{date}</Card.Text>
+        <Card.Text>{time}</Card.Text>
+      </Card.Body>
+      <Button
+        onClick={() => {
+          router.push(`/events/edit/${id}`);
+        }}
+      >
+        Edit Event
+      </Button>
+      <Button onClick={deleteThisEvent}>
+        Delete
+      </Button>
+    </Card>
+  );
+};
 
 EventCard.propTypes = {
+  id: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   date: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default EventCard;

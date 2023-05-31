@@ -3,40 +3,35 @@ import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router'; // Import the useRouter hook
 import EventCard from '../components/EventCard';
 import { getEvents } from '../utils/data/eventdata';
+import { useAuth } from '../utils/context/authContext';
 
 function Home() {
   const [events, setEvents] = useState([]);
-  const router = useRouter(); // Access the router object
+  const router = useRouter();
+  const { user } = useAuth();
 
+  const showEvents = () => {
+    getEvents(user.uid).then((data) => setEvents(data));
+  };
   useEffect(() => {
-    getEvents().then((data) => setEvents(data));
+    showEvents();
   }, []);
 
   return (
-    <>
-      <Button
-        className="register-btn"
-        onClick={() => {
-          router.push('/events/new');
-        }}
+    <article className="events">
+      <h1>Events</h1>
+      <Button onClick={() => {
+        router.push('/events/new');
+      }}
       >
         Register New Event
       </Button>
-      <h1>Events</h1>
-      <article className="events">
-        {events.map((event) => (
-          <section key={`event--${event.id}`} className="event">
-            <EventCard
-              game={event.game}
-              description={event.description}
-              date={event.date}
-              time={event.time}
-              organizer={event.organizer}
-            />
-          </section>
-        ))}
-      </article>
-    </>
+      {events.map((event) => (
+        <section key={`event--${event.id}`} className="event">
+          <EventCard id={event.id} description={event.description} date={event.date} time={event.time} joined={event.joined} onUpdate={showEvents} />
+        </section>
+      ))}
+    </article>
   );
 }
 
