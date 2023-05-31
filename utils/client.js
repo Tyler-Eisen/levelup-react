@@ -3,13 +3,13 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const firebaseCredentials = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  apiKey: "AIzaSyDrpBedPHNH_xabYg9Wj6GJZ5HWXaSJp8Q",
+  authDomain: "levelup-715a5.firebaseapp.com",
 };
 
 const clientCredentials = {
   ...firebaseCredentials,
-  databaseURL: process.env.NEXT_PUBLIC_DATABASE_URL,
+  databaseURL: "http://localhost:8000",
 };
 
 if (!firebase.apps.length) {
