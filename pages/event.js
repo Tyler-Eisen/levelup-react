@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useRouter } from 'next/router'; // Import the useRouter hook
+import { useRouter } from 'next/router';
 import EventCard from '../components/EventCard';
 import { getEvents } from '../utils/data/eventdata';
 import { useAuth } from '../utils/context/authContext';
@@ -18,20 +18,34 @@ function Home() {
   }, []);
 
   return (
-    <article className="events">
-      <h1>Events</h1>
-      <Button onClick={() => {
-        router.push('/events/new');
-      }}
+    <>
+      <Button
+        className="register-btn"
+        onClick={() => {
+          router.push('/events/new');
+        }}
       >
         Register New Event
       </Button>
-      {events.map((event) => (
-        <section key={`event--${event.id}`} className="event">
-          <EventCard id={event.id} description={event.description} date={event.date} time={event.time} joined={event.joined} onUpdate={showEvents} />
-        </section>
-      ))}
-    </article>
+      <h1>Events</h1>
+      <div style={{
+        display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center',
+      }}
+      >
+        {events.map((event) => (
+          <div key={`event--${event.id}`} className="event">
+            <EventCard
+              id={event.id}
+              description={event.description}
+              date={event.date}
+              time={event.time}
+              joined={event.joined}
+              onUpdate={showEvents}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 

@@ -26,13 +26,17 @@ const EventCard = ({
         <Card.Text>{time}</Card.Text>
       </Card.Body>
       <Button
+        className="edit-btn"
         onClick={() => {
           router.push(`/events/edit/${id}`);
         }}
       >
         Edit Event
       </Button>
-      <Button onClick={deleteThisEvent}>
+      <Button
+        className="delete-btn"
+        onClick={deleteThisEvent}
+      >
         Delete
       </Button>
     </Card>

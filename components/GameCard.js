@@ -28,13 +28,17 @@ const GameCard = ({
       </Card.Body>
       <Card.Footer className="text-muted">Skill Level: {skillLevel}</Card.Footer>
       <Button
+        className="edit-btn"
         onClick={() => {
           router.push(`/games/edit/${id}`);
         }}
       >
         Edit Game
       </Button>
-      <Button onClick={deleteThisGame}>
+      <Button
+        className="delete-btn"
+        onClick={deleteThisGame}
+      >
         Delete
       </Button>
     </Card>
