@@ -5,7 +5,7 @@ import EventForm from '../../../components/EventForm';
 import { getSingleEvent } from '../../../utils/data/eventdata';
 
 export default function EditEvent() {
-  const [Event, setEvent] = useState({});
+  const [event, setEvent] = useState({});
   const router = useRouter();
 
   const { id } = router.query;
@@ -20,9 +20,9 @@ export default function EditEvent() {
   return (
     <>
       <Head>
-        <title>Update {Event.title} </title>
+        <title>Update {event.title} </title>
       </Head>
-      <EventForm Event={Event} />
+      <EventForm obj={event} />
 
     </>
   );

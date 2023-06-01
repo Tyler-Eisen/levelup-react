@@ -18,7 +18,7 @@ a {
 }
 
 body {
-  background-color: #70044E;
+  background-color: #073B3A;
   color: white; /* This sets all text color to white */
 }
 
@@ -45,6 +45,7 @@ body {
   margin: 20px;
   width: 200px;
   height: 300px;
+  background-color: #0B6E4F;
 }
 
 
@@ -52,7 +53,30 @@ body {
   position: fixed; /* Fix the position of button on the page */
   bottom: 20px; /* Distance from the bottom */
   left: 50%; /* Position it at the center */
-  background-color: #FFBB23;
+  background-color: #6BBF59;
   z-index: 1000;
   margin-top: 10px;
+}
+
+.navBar{
+  background-color: #0B6E4F;
+}
+
+.edit-btn{
+  background-color: #6BBF59;
+}
+
+.delete-btn{
+  background-color: #A390E4;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

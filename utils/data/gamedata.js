@@ -1,13 +1,11 @@
 import { clientCredentials } from '../client';
 
-const getGames = () => {
-  return fetch(`${clientCredentials.databaseURL}/games`)
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error fetching games:', error);
-      throw error;
-    });
-};
+const getGames = () => fetch(`${clientCredentials.databaseURL}/games`)
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error fetching games:', error);
+    throw error;
+  });
 
 const createGame = (game) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/games`, {
@@ -28,39 +26,44 @@ const createGame = (game) => new Promise((resolve, reject) => {
     });
 });
 
-const getGameTypes = () => {
-  return fetch(`${clientCredentials.databaseURL}/gametypes`)
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error fetching game types:', error);
-      throw error;
-    });
-};
+const getGameTypes = () => fetch(`${clientCredentials.databaseURL}/gametypes`)
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error fetching game types:', error);
+    throw error;
+  });
 
-const updateGame = (id, currentGame) => {
-  return fetch(`${clientCredentials.databaseURL}/games/${id}`, {
-    method: 'PUT',
+const updateGame = (id, currentGame) => fetch(`${clientCredentials.databaseURL}/games/${id}`, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(currentGame),
+})
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error updating game:', error);
+    throw error;
+  });
+
+const getSingleGame = (id) => fetch(`${clientCredentials.databaseURL}/games/${id}`)
+  .then((response) => response.json())
+  .catch((error) => {
+    console.error('Error fetching game:', error);
+    throw error;
+  });
+
+const deleteGame = (game) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/games/${game}`, {
+    method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application.json',
     },
-    body: JSON.stringify(currentGame),
   })
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error updating game:', error);
-      throw error;
-    });
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+export {
+  getGames, createGame, getGameTypes, updateGame, getSingleGame, deleteGame,
 };
-
-const getSingleGame = (id) => {
-  return fetch(`${clientCredentials.databaseURL}/games/${id}`)
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error fetching game:', error);
-      throw error;
-    });
-};
-
-
-
-export { getGames, createGame, getGameTypes, updateGame, getSingleGame };
